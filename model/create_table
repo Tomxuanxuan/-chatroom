@@ -1,0 +1,45 @@
+CREATE DATABASE QQCHAT CHARACTER SET utf8;
+
+#用户表
+CREATE TABLE IF NOT EXISTS user(
+   id INT UNSIGNED AUTO_INCREMENT,
+   username VARCHAR(20) NOT NULL,
+   password VARCHAR(100) NOT NULL,
+   niname VARCHAR(20) ,
+   age INT(4) ,
+   sex VARCHAR(20) ,
+   pic VARCHAR(50) ,
+   address VARCHAR(20),
+   port INT(11),
+   is_online BOOLEAN,
+   PRIMARY KEY ( id )
+);
+
+#好友表
+CREATE TABLE IF NOT EXISTS friend(
+   id INT UNSIGNED AUTO_INCREMENT,
+   user_id INT(11),
+   user_name VARCHAR(50),
+   friend_id INT(11),
+   friend_name VARCHAR(50),
+   PRIMARY KEY ( id ),
+   FOREIGN KEY(user_id) REFERENCES user(id),
+   FOREIGN KEY(friend_id) REFERENCES user(id)
+);
+
+alter table user modify column id int;
+
+#内容表
+
+CREATE TABLE IF NOT EXISTS content(
+   id INT  AUTO_INCREMENT,
+   send_id INT,
+   send_name VARCHAR(50),
+   recive_id INT,
+   recive_name VARCHAR(50),
+   message TEXT,
+   create_time DATETIME,
+   PRIMARY KEY ( id ),
+   FOREIGN KEY(send_id) REFERENCES user(id),
+   FOREIGN KEY(recive_id) REFERENCES user(id)
+);
